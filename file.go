@@ -1,7 +1,7 @@
 package todo
 
 type File struct {
-	Id       int    `json:"id"`
+	Id       int    `json:"file_id"`
 	FileName string `json:"file_name"`
 	FileDate string `json:"file_date"`
 	FileSize int    `json:"file_size"`

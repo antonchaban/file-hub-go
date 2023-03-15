@@ -1,7 +1,7 @@
 package todo
 
 type Folder struct {
-	Id         int    `json:"id"`
+	Id         int    `json:"folder_id"`
 	FolderName string `json:"folder_name"`
 	FolderDate string `json:"folder_date"`
 }
