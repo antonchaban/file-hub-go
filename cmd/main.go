@@ -3,11 +3,15 @@ package main
 import (
 	todo "github.com/antonchaban/file-hub-go"
 	"github.com/antonchaban/file-hub-go/pkg/handler"
+	"github.com/antonchaban/file-hub-go/pkg/repository"
+	"github.com/antonchaban/file-hub-go/pkg/service"
 	"log"
 )
 
 func main() {
-	handlers := new(handler.Handler)
+	repos := repository.NewRepository()
+	services := service.NewService(repos)
+	handlers := handler.NewHandler(services)
 
 	srv := new(todo.Server)
 	if err := srv.Run("8080", handlers.InitRoutes()); err != nil {
