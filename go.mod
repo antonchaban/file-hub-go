@@ -1,6 +1,6 @@
 module github.com/antonchaban/file-hub-go
 
-go 1.15
+go 1.18
 
 require (
 	github.com/bytedance/sonic v1.8.5 // indirect
