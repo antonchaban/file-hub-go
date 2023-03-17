@@ -5,6 +5,14 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const (
+	usersTable        = "users"
+	foldersTable      = "folders"
+	filesTable        = "files"
+	usersFoldersTable = "users_folders"
+	foldersFilesTable = "folders_files"
+)
+
 type Config struct {
 	Host     string
 	Port     string
