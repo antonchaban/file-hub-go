@@ -1,9 +1,9 @@
 package todo
 
 type Folder struct {
-	Id         int    `json:"folder_id"`
-	FolderName string `json:"folder_name"`
-	FolderDate string `json:"folder_date"`
+	Id         int    `json:"id" db:"id"`
+	FolderName string `json:"folder_name" db:"folder_name" binding:"required"`
+	FolderDate string `json:"folder_date" db:"folderdate"`
 }
 
 type UsersFolders struct {

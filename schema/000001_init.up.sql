@@ -7,9 +7,9 @@ CREATE TABLE users
 
 CREATE TABLE folders
 (
-    id          serial primary key not null unique,
-    folder_name varchar(255)       not null,
-    FolderDate  date               not null
+    id          serial primary key                  not null unique,
+    folder_name varchar(255)                        not null,
+    FolderDate  timestamp default CURRENT_TIMESTAMP not null
 );
 
 CREATE TABLE files

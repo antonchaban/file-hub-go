@@ -11,10 +11,13 @@ type Authorization interface {
 	ParseToken(token string) (int, error)
 }
 
-type File interface {
+type Folder interface {
+	CreateFolder(userId int, folder todo.Folder) (int, error)
+	GetAllFolders(userId int) ([]todo.Folder, error)
+	GetById(userId, id int) (todo.Folder, error)
 }
 
-type Folder interface {
+type File interface {
 }
 
 type Service struct {
@@ -26,5 +29,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		Folder:        NewFolderService(repos.Folder),
 	}
 }

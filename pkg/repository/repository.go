@@ -10,10 +10,13 @@ type Authorization interface {
 	GetUser(username, password string) (todo.User, error)
 }
 
-type File interface {
+type Folder interface {
+	CreateFolder(userId int, folder todo.Folder) (int, error)
+	GetAllFolders(userId int) ([]todo.Folder, error)
+	GetById(userId, id int) (todo.Folder, error)
 }
 
-type Folder interface {
+type File interface {
 }
 
 type Repository struct {
@@ -25,5 +28,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Folder:        NewFolderPostgres(db),
 	}
 }
