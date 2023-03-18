@@ -73,9 +73,50 @@ func (h *Handler) getFolderById(c *gin.Context) {
 }
 
 func (h *Handler) updateFolder(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
 
+	id, err := strconv.Atoi(c.Param("folder_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid folder id param")
+	}
+
+	var input todo.UpdateFolderInput
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := h.services.Update(userId, id, input); err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }
 
 func (h *Handler) deleteFolder(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
 
+	id, err := strconv.Atoi(c.Param("folder_id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid folder id param")
+	}
+
+	err = h.services.Folder.Delete(userId, id)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }

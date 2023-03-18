@@ -14,6 +14,8 @@ type Folder interface {
 	CreateFolder(userId int, folder todo.Folder) (int, error)
 	GetAllFolders(userId int) ([]todo.Folder, error)
 	GetById(userId, id int) (todo.Folder, error)
+	Delete(userId, folderId int) error
+	Update(userId, folderId int, input todo.UpdateFolderInput) error
 }
 
 type File interface {

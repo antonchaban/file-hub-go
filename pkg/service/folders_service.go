@@ -21,6 +21,17 @@ func (s *FolderService) GetAllFolders(userId int) ([]todo.Folder, error) {
 	return s.repo.GetAllFolders(userId)
 }
 
-func (s *FolderService) GetById(userId, id int) (todo.Folder, error) {
-	return s.repo.GetById(userId, id)
+func (s *FolderService) GetById(userId, folderId int) (todo.Folder, error) {
+	return s.repo.GetById(userId, folderId)
+}
+
+func (s *FolderService) Delete(userId, folderId int) error {
+	return s.repo.Delete(userId, folderId)
+}
+
+func (s *FolderService) Update(userId, folderId int, input todo.UpdateFolderInput) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+	return s.repo.Update(userId, folderId, input)
 }

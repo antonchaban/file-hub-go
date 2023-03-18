@@ -4,6 +4,8 @@ import (
 	"fmt"
 	todo "github.com/antonchaban/file-hub-go"
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
+	"strings"
 )
 
 type FolderPostgres struct {
@@ -54,5 +56,37 @@ func (r *FolderPostgres) GetById(userId, id int) (todo.Folder, error) {
 		foldersTable, usersFoldersTable)
 	err := r.db.Get(&folder, query, userId, id)
 	return folder, err
+
+}
+
+func (r *FolderPostgres) Delete(userId, folderId int) error {
+	query := fmt.Sprintf("delete from %s ft using %s uft where ft.id = uft.folder_id and uft.user_id=$1 and uft.folder_id=$2",
+		foldersTable, usersFoldersTable)
+	_, err := r.db.Exec(query, userId, folderId)
+	return err
+}
+
+func (r *FolderPostgres) Update(userId, folderId int, input todo.UpdateFolderInput) error {
+	setValue := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.FolderName != nil {
+		setValue = append(setValue, fmt.Sprintf("folder_name=$%d", argId))
+		args = append(args, *input.FolderName)
+		argId++
+	}
+
+	setQuery := strings.Join(setValue, ", ")
+
+	query := fmt.Sprintf("update %s ft set %s from %s uft where ft.id = uft.folder_id and uft.user_id=$%d and uft.folder_id=$%d",
+		foldersTable, setQuery, usersFoldersTable, argId, argId+1)
+
+	args = append(args, folderId, userId)
+	logrus.Debug("Update query: ", query)
+	logrus.Debug("Update args: ", args)
+
+	_, err := r.db.Exec(query, args...)
+	return err
 
 }
