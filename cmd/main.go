@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/antonchaban/file-hub-go/pkg/handler"
 	"github.com/antonchaban/file-hub-go/pkg/repository"
@@ -11,6 +10,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -37,10 +37,10 @@ func main() {
 		logrus.Fatal("error occurred while loading env variables: ", err.Error())
 	}
 
-	fmt.Println("with dollar")
-	fmt.Println(os.Getenv("$HDB_PASSWORD"))
-	fmt.Println("without dollar")
-	fmt.Println(os.Getenv("HDB_PASSWORD"))
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("dbHeroku.host"),
@@ -48,7 +48,7 @@ func main() {
 		Username: viper.GetString("dbHeroku.username"),
 		DBName:   viper.GetString("dbHeroku.dbname"),
 		SSLMode:  viper.GetString("dbHeroku.sslmode"),
-		Password: os.Getenv("$HDB_PASSWORD"),
+		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
 		logrus.Fatal("error occurred while connecting to db: ", err.Error())
