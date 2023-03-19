@@ -4,6 +4,7 @@ import (
 	"fmt"
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/jmoiron/sqlx"
+	"strings"
 )
 
 type FilePostgres struct {
@@ -50,4 +51,53 @@ func (r *FilePostgres) GetAllFiles(userId, folderId int) ([]fhub.File, error) {
 	}
 
 	return files, nil
+}
+
+func (r *FilePostgres) GetFileById(userId, fileId int) (fhub.File, error) {
+	var file fhub.File
+
+	query := fmt.Sprintf(`select fit.id, fit.file_name, fit.file_date, fit.file_size, fit.file_path from %s fit inner join %s fft on fft.file_id = fit.id
+					inner join %s uft on uft.folder_id = fft.folder_id where fit.id = $1 and uft.user_id = $2`,
+		filesTable, foldersFilesTable, usersFoldersTable)
+	if err := r.db.Get(&file, query, fileId, userId); err != nil {
+		return file, err
+	}
+
+	return file, nil
+}
+
+func (r *FilePostgres) DeleteFile(userId, fileId int) error {
+	query := fmt.Sprintf(`DELETE FROM %s fit USING %s fft, %s uft 
+									WHERE fit.id = fft.file_id AND fft.folder_id = uft.folder_id AND uft.user_id = $1 AND fit.id = $2`,
+		filesTable, foldersFilesTable, usersFoldersTable)
+	_, err := r.db.Exec(query, userId, fileId)
+	return err
+}
+
+func (r *FilePostgres) UpdateFile(userId, fileId int, input fhub.UpdateFileInput) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.FileName != nil {
+		setValues = append(setValues, fmt.Sprintf("file_name=$%d", argId))
+		args = append(args, *input.FileName)
+		argId++
+	}
+
+	if input.FilePath != nil {
+		setValues = append(setValues, fmt.Sprintf("file_path=$%d", argId))
+		args = append(args, *input.FilePath)
+		argId++
+	}
+
+	setQuery := strings.Join(setValues, ", ")
+
+	query := fmt.Sprintf(`UPDATE %s fit SET %s FROM %s fft, %s uft
+									WHERE fit.id = fft.file_id AND fft.folder_id = uft.folder_id AND uft.user_id = $%d AND fit.id = $%d`,
+		filesTable, setQuery, foldersFilesTable, usersFoldersTable, argId, argId+1)
+	args = append(args, userId, fileId)
+
+	_, err := r.db.Exec(query, args...)
+	return err
 }

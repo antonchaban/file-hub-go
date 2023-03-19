@@ -1,7 +1,7 @@
 package main
 
 import (
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/antonchaban/file-hub-go/pkg/handler"
 	"github.com/antonchaban/file-hub-go/pkg/repository"
 	"github.com/antonchaban/file-hub-go/pkg/service"
@@ -39,7 +39,7 @@ func main() {
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	srv := new(todo.Server)
+	srv := new(fhub.Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		logrus.Fatal("error occurred while running http server: ", err.Error())
 	}

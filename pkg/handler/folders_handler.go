@@ -1,7 +1,7 @@
 package handler
 
 import (
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -13,7 +13,7 @@ func (h *Handler) createFolder(c *gin.Context) {
 		return
 	}
 
-	var input todo.Folder
+	var input fhub.Folder
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -31,7 +31,7 @@ func (h *Handler) createFolder(c *gin.Context) {
 }
 
 type getAllFoldersInput struct {
-	Data []todo.Folder `json:"data"`
+	Data []fhub.Folder `json:"data"`
 }
 
 func (h *Handler) getAllFolders(c *gin.Context) {
@@ -85,7 +85,7 @@ func (h *Handler) updateFolder(c *gin.Context) {
 		return
 	}
 
-	var input todo.UpdateFolderInput
+	var input fhub.UpdateFolderInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return

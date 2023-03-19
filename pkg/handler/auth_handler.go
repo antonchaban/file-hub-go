@@ -1,13 +1,13 @@
 package handler
 
 import (
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func (h *Handler) signUp(c *gin.Context) {
-	var input todo.User
+	var input fhub.User
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
