@@ -42,7 +42,7 @@ func main() {
 		Username: viper.GetString("dbHeroku.username"),
 		DBName:   viper.GetString("dbHeroku.dbname"),
 		SSLMode:  viper.GetString("dbHeroku.sslmode"),
-		Password: os.Getenv("DB_PASSWORD"),
+		Password: os.Getenv("HDB_PASSWORD"),
 	})
 	if err != nil {
 		logrus.Fatal("error occurred while connecting to db: ", err.Error())
