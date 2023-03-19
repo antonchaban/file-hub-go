@@ -14,11 +14,11 @@ CREATE TABLE folders
 
 CREATE TABLE files
 (
-    id        serial primary key not null unique,
-    file_name varchar(255)       not null,
-    file_date date               not null,
-    file_size varchar(255)       not null,
-    file_path varchar(255)       not null
+    id        serial primary key                  not null unique,
+    file_name varchar(255)                        not null,
+    file_date timestamp default CURRENT_TIMESTAMP not null,
+    file_size varchar(255),
+    file_path varchar(2048)                       not null
 );
 
 CREATE TABLE users_folders

@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/antonchaban/file-hub-go/pkg/repository"
 	"github.com/dgrijalva/jwt-go"
 	"time"
@@ -47,7 +47,7 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-func (s *AuthService) CreateUser(user todo.User) (int, error) {
+func (s *AuthService) CreateUser(user fhub.User) (int, error) {
 	user.Password = s.generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }

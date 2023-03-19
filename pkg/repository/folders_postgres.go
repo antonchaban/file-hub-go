@@ -2,7 +2,7 @@ package repository
 
 import (
 	"fmt"
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 	"strings"
@@ -16,7 +16,7 @@ func NewFolderPostgres(db *sqlx.DB) *FolderPostgres {
 	return &FolderPostgres{db: db}
 }
 
-func (r *FolderPostgres) CreateFolder(userId int, folder todo.Folder) (int, error) {
+func (r *FolderPostgres) CreateFolder(userId int, folder fhub.Folder) (int, error) {
 	tx, err := r.db.Begin()
 	if err != nil {
 		return 0, err
@@ -40,16 +40,16 @@ func (r *FolderPostgres) CreateFolder(userId int, folder todo.Folder) (int, erro
 	return id, tx.Commit()
 }
 
-func (r *FolderPostgres) GetAllFolders(userId int) ([]todo.Folder, error) {
-	var folders []todo.Folder
+func (r *FolderPostgres) GetAllFolders(userId int) ([]fhub.Folder, error) {
+	var folders []fhub.Folder
 	query := fmt.Sprintf("select ft.id, ft.folder_name, ft.folderdate from %s ft inner join %s uft on ft.id = uft.folder_id where uft.user_id = $1",
 		foldersTable, usersFoldersTable)
 	err := r.db.Select(&folders, query, userId)
 	return folders, err
 }
 
-func (r *FolderPostgres) GetById(userId, id int) (todo.Folder, error) {
-	var folder todo.Folder
+func (r *FolderPostgres) GetById(userId, id int) (fhub.Folder, error) {
+	var folder fhub.Folder
 	query := fmt.Sprintf(
 		"select ft.id, ft.folder_name, ft.folderdate from %s ft inner join %s uft on ft.id = uft.folder_id "+
 			"where uft.user_id = $1 and ft.id = $2",
@@ -66,7 +66,7 @@ func (r *FolderPostgres) Delete(userId, folderId int) error {
 	return err
 }
 
-func (r *FolderPostgres) Update(userId, folderId int, input todo.UpdateFolderInput) error {
+func (r *FolderPostgres) Update(userId, folderId int, input fhub.UpdateFolderInput) error {
 	setValue := make([]string, 0)
 	args := make([]interface{}, 0)
 	argId := 1

@@ -61,6 +61,7 @@ func (h *Handler) getFolderById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("folder_id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid folder id param")
+		return
 	}
 
 	folder, err := h.services.Folder.GetById(userId, id)
@@ -81,6 +82,7 @@ func (h *Handler) updateFolder(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("folder_id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid folder id param")
+		return
 	}
 
 	var input todo.UpdateFolderInput
@@ -108,6 +110,7 @@ func (h *Handler) deleteFolder(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("folder_id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid folder id param")
+		return
 	}
 
 	err = h.services.Folder.Delete(userId, id)

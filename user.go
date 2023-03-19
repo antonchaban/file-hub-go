@@ -1,4 +1,4 @@
-package todo
+package fhub
 
 type User struct {
 	Id       int    `json:"-" db:"id"`

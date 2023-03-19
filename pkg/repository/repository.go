@@ -1,24 +1,26 @@
 package repository
 
 import (
-	todo "github.com/antonchaban/file-hub-go"
+	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/jmoiron/sqlx"
 )
 
 type Authorization interface {
-	CreateUser(user todo.User) (int, error)
-	GetUser(username, password string) (todo.User, error)
+	CreateUser(user fhub.User) (int, error)
+	GetUser(username, password string) (fhub.User, error)
 }
 
 type Folder interface {
-	CreateFolder(userId int, folder todo.Folder) (int, error)
-	GetAllFolders(userId int) ([]todo.Folder, error)
-	GetById(userId, id int) (todo.Folder, error)
+	CreateFolder(userId int, folder fhub.Folder) (int, error)
+	GetAllFolders(userId int) ([]fhub.Folder, error)
+	GetById(userId, id int) (fhub.Folder, error)
 	Delete(userId, folderId int) error
-	Update(userId, folderId int, input todo.UpdateFolderInput) error
+	Update(userId, folderId int, input fhub.UpdateFolderInput) error
 }
 
 type File interface {
+	CreateFile(folderId int, file fhub.File) (int, error)
+	GetAllFiles(userId, folderId int) ([]fhub.File, error)
 }
 
 type Repository struct {
@@ -31,5 +33,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Folder:        NewFolderPostgres(db),
+		File:          NewFilePostgres(db),
 	}
 }
