@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/antonchaban/file-hub-go/pkg/handler"
 	"github.com/antonchaban/file-hub-go/pkg/repository"
@@ -35,6 +36,11 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		logrus.Fatal("error occurred while loading env variables: ", err.Error())
 	}
+
+	fmt.Println("with dollar")
+	fmt.Println(os.Getenv("$HDB_PASSWORD"))
+	fmt.Println("without dollar")
+	fmt.Println(os.Getenv("HDB_PASSWORD"))
 
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("dbHeroku.host"),
