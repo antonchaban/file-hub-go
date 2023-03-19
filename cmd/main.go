@@ -10,7 +10,6 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -35,11 +34,6 @@ func main() {
 
 	if err := godotenv.Load(); err != nil {
 		logrus.Fatal("error occurred while loading env variables: ", err.Error())
-	}
-
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
