@@ -31,16 +31,20 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			folders.GET("/:folder_id", h.getFolderById)
 			folders.PUT("/:folder_id", h.updateFolder)
 			folders.DELETE("/:folder_id", h.deleteFolder)
-		}
 
-		files := folders.Group("/:folder_id/files")
+			files := folders.Group("/:folder_id/files")
+			{
+				files.GET("/", h.getAllFiles)
+				files.POST("/", h.createFile)
+			}
+		}
+		files := api.Group("/files")
 		{
-			files.GET("/", h.getAllFiles)
-			files.POST("/", h.createFile)
 			files.GET("/:file_id", h.getFileById)
 			files.PUT("/:file_id", h.updateFile)
 			files.DELETE("/:file_id", h.deleteFile)
 		}
+
 	}
 	return router
 }
