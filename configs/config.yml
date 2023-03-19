@@ -2,8 +2,15 @@ port: "8080"
 
 db:
   username: "postgres"
-  password: "admin"
   host: "localhost"
   port: "5436"
   dbname: "postgres"
   sslmode: "disable"
+
+dbHeroku:
+  username: "wgzziqkdgggmny"
+  host: "ec2-52-50-161-219.eu-west-1.compute.amazonaws.com"
+  port: "5432"
+  dbname: "d9nhagsufr5p7i"
+  sslmode: "require"
+
