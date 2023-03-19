@@ -53,7 +53,7 @@ func main() {
 
 	srv := new(fhub.Server)
 	go func() {
-		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+		if err := srv.Run(os.Getenv("PORT"), handlers.InitRoutes()); err != nil {
 			logrus.Fatal("error occurred while running http server: ", err.Error())
 		}
 	}()
