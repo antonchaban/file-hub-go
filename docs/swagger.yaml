@@ -77,7 +77,7 @@ definitions:
       status:
         type: string
     type: object
-host: https://file-hub-go.herokuapp.com/
+host: file-hub-go.herokuapp.com
 info:
   contact: {}
   description: API Server for Files Managing Application

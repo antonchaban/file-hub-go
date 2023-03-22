@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "https://file-hub-go.herokuapp.com/",
+    "host": "file-hub-go.herokuapp.com",
     "basePath": "/",
     "paths": {
         "/api/files/{file_id}": {
