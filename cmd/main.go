@@ -18,7 +18,7 @@ import (
 // @version 1.0
 // @description API Server for Files Managing Application
 
-// @host https://file-hub-go.herokuapp.com/
+// @host file-hub-go.herokuapp.com
 // @BasePath /
 
 // @securityDefinitions.apikey ApiKeyAuth
