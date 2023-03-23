@@ -95,21 +95,15 @@ func (h *Handler) signIn(c *gin.Context) {
 func (h *Handler) signOut(c *gin.Context) {
 	logrus.Debug("[Handler] - Sign out - started")
 
-	var input signOutInput
-	if err := c.BindJSON(&input); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
-	}
+	token := c.GetHeader(authHeader)
 
-	token, err := h.services.Authorization.GenerateToken(input.Username, input.Password)
+	_, err := h.services.Authorization.InvalidateToken(token)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"token": token,
-	})
+	c.JSON(http.StatusOK, map[string]interface{}{})
 
 	logrus.Debug("[Handler] - Sign out - finished successfully")
 }
