@@ -14,8 +14,8 @@ type Folder interface {
 	CreateFolder(userId int, folder fhub.Folder) (int, error)
 	GetAllFolders(userId int) ([]fhub.Folder, error)
 	GetById(userId, id int) (fhub.Folder, error)
-	Delete(userId, folderId int) error
-	Update(userId, folderId int, input fhub.UpdateFolderInput) error
+	DeleteFolder(userId, folderId int) error
+	UpdateFolder(userId, folderId int, input fhub.UpdateFolderInput) error
 }
 
 type File interface {

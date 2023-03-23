@@ -92,7 +92,7 @@ const docTemplate = `{
                 "tags": [
                     "files"
                 ],
-                "summary": "Update file",
+                "summary": "UpdateFolder file",
                 "operationId": "update-file",
                 "parameters": [
                     {
@@ -161,7 +161,7 @@ const docTemplate = `{
                 "tags": [
                     "files"
                 ],
-                "summary": "Delete file",
+                "summary": "DeleteFolder file",
                 "operationId": "delete-file",
                 "parameters": [
                     {
@@ -398,7 +398,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "Update folder",
+                "summary": "UpdateFolder folder",
                 "operationId": "update-folder",
                 "parameters": [
                     {
@@ -467,7 +467,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "Delete folder",
+                "summary": "DeleteFolder folder",
                 "operationId": "delete-folder",
                 "parameters": [
                     {

@@ -157,7 +157,7 @@ func (h *Handler) updateFolder(c *gin.Context) {
 		return
 	}
 
-	if err := h.services.Update(userId, id, input); err != nil {
+	if err := h.services.UpdateFolder(userId, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -196,7 +196,7 @@ func (h *Handler) deleteFolder(c *gin.Context) {
 		return
 	}
 
-	err = h.services.Folder.Delete(userId, id)
+	err = h.services.Folder.DeleteFolder(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

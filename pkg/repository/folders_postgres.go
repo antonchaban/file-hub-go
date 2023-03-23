@@ -59,14 +59,14 @@ func (r *FolderPostgres) GetById(userId, id int) (fhub.Folder, error) {
 
 }
 
-func (r *FolderPostgres) Delete(userId, folderId int) error {
+func (r *FolderPostgres) DeleteFolder(userId, folderId int) error {
 	query := fmt.Sprintf("delete from %s ft using %s uft where ft.id = uft.folder_id and uft.user_id=$1 and uft.folder_id=$2",
 		foldersTable, usersFoldersTable)
 	_, err := r.db.Exec(query, userId, folderId)
 	return err
 }
 
-func (r *FolderPostgres) Update(userId, folderId int, input fhub.UpdateFolderInput) error {
+func (r *FolderPostgres) UpdateFolder(userId, folderId int, input fhub.UpdateFolderInput) error {
 	setValue := make([]string, 0)
 	args := make([]interface{}, 0)
 	argId := 1
@@ -83,8 +83,8 @@ func (r *FolderPostgres) Update(userId, folderId int, input fhub.UpdateFolderInp
 		foldersTable, setQuery, usersFoldersTable, argId, argId+1)
 
 	args = append(args, folderId, userId)
-	logrus.Debug("Update query: ", query)
-	logrus.Debug("Update args: ", args)
+	logrus.Debug("UpdateFolder query: ", query)
+	logrus.Debug("UpdateFolder args: ", args)
 
 	_, err := r.db.Exec(query, args...)
 	return err

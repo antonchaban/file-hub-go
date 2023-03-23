@@ -6,12 +6,12 @@ import (
 )
 
 type FileService struct {
-	repo       repository.File
+	fileRepo   repository.File
 	folderRepo repository.Folder
 }
 
-func NewFileService(repo repository.File, folderRepo repository.Folder) *FileService {
-	return &FileService{repo: repo, folderRepo: folderRepo}
+func NewFileService(fileRepo repository.File, folderRepo repository.Folder) *FileService {
+	return &FileService{fileRepo: fileRepo, folderRepo: folderRepo}
 }
 
 func (s *FileService) CreateFile(userId, folderId int, file fhub.File) (int, error) {
@@ -20,21 +20,21 @@ func (s *FileService) CreateFile(userId, folderId int, file fhub.File) (int, err
 		return 0, err
 	}
 
-	return s.repo.CreateFile(folderId, file)
+	return s.fileRepo.CreateFile(folderId, file)
 }
 
 func (s *FileService) GetAllFiles(userId, folderId int) ([]fhub.File, error) {
-	return s.repo.GetAllFiles(userId, folderId)
+	return s.fileRepo.GetAllFiles(userId, folderId)
 }
 
 func (s *FileService) GetFileById(userId, fileId int) (fhub.File, error) {
-	return s.repo.GetFileById(userId, fileId)
+	return s.fileRepo.GetFileById(userId, fileId)
 }
 
 func (s *FileService) DeleteFile(userId, fileId int) error {
-	return s.repo.DeleteFile(userId, fileId)
+	return s.fileRepo.DeleteFile(userId, fileId)
 }
 
 func (s *FileService) UpdateFile(userId, fileId int, input fhub.UpdateFileInput) error {
-	return s.repo.UpdateFile(userId, fileId, input)
+	return s.fileRepo.UpdateFile(userId, fileId, input)
 }
