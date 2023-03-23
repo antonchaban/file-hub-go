@@ -3,6 +3,7 @@ package handler
 import (
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -19,6 +20,8 @@ import (
 // @Failure default {object} errorResponse
 // @Router /auth/sign-up [post]
 func (h *Handler) signUp(c *gin.Context) {
+	logrus.Debug("[Handler] - Sign up - started")
+
 	var input fhub.User
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
@@ -34,6 +37,8 @@ func (h *Handler) signUp(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
+
+	logrus.Debug("[Handler] - Sign up - finished successfully")
 }
 
 type signInInput struct {
@@ -54,6 +59,8 @@ type signInInput struct {
 // @Failure default {object} errorResponse
 // @Router /auth/sign-in [post]
 func (h *Handler) signIn(c *gin.Context) {
+	logrus.Debug("[Handler] - Sign in - started")
+
 	var input signInInput
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
@@ -69,4 +76,6 @@ func (h *Handler) signIn(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"token": token,
 	})
+
+	logrus.Debug("[Handler] - Sign in - finished successfully")
 }
