@@ -8,8 +8,9 @@ import (
 type Authorization interface {
 	CreateUser(user fhub.User) (int, error)
 	GetUser(username, password string) (fhub.User, error)
+	AddTokenToBlacklist(token string) (int, error)
+	IsTokenInBlacklist(token string) (bool, error)
 }
-
 type Folder interface {
 	CreateFolder(userId int, folder fhub.Folder) (int, error)
 	GetAllFolders(userId int) ([]fhub.Folder, error)

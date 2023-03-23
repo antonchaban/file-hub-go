@@ -79,3 +79,37 @@ func (h *Handler) signIn(c *gin.Context) {
 
 	logrus.Debug("[Handler] - Sign in - finished successfully")
 }
+
+// @Summary SignOut
+// @Tags auth
+// @Description sign out
+// @ID signOut
+// @Accept  json
+// @Produce  json
+// @Param input body signOutInput true "credentials"
+// @Success 200 {object} statusResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /auth/sign-out [post]
+func (h *Handler) signOut(c *gin.Context) {
+	logrus.Debug("[Handler] - Sign out - started")
+
+	var input signOutInput
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	token, err := h.services.Authorization.GenerateToken(input.Username, input.Password)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"token": token,
+	})
+
+	logrus.Debug("[Handler] - Sign out - finished successfully")
+}

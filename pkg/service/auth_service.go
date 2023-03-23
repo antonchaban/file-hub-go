@@ -67,6 +67,14 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 	return token.SignedString([]byte(signingKey))
 }
 
+func (s *AuthService) InvalidateToken(accessToken string) (int, error) {
+	id, err := s.repo.AddTokenToBlacklist(accessToken)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
 func (s *AuthService) generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))

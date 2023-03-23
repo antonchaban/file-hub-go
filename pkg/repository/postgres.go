@@ -11,6 +11,7 @@ const (
 	filesTable        = "files"
 	usersFoldersTable = "users_folders"
 	foldersFilesTable = "folders_files"
+	tokensBlacklist   = "tokens_blacklist"
 )
 
 type Config struct {
