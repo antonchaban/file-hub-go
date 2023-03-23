@@ -3,6 +3,7 @@ package handler
 import (
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 )
@@ -21,6 +22,8 @@ import (
 // @Failure default {object} errorResponse
 // @Router /api/folders [post]
 func (h *Handler) createFolder(c *gin.Context) {
+	logrus.Debug("[Handler] - Create folder - started")
+
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -41,6 +44,8 @@ func (h *Handler) createFolder(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
+
+	logrus.Debug("[Handler] - Create folder - finished successfully")
 }
 
 type getAllFoldersResponse struct {
@@ -60,6 +65,8 @@ type getAllFoldersResponse struct {
 // @Failure default {object} errorResponse
 // @Router /api/folders [get]
 func (h *Handler) getAllFolders(c *gin.Context) {
+	logrus.Debug("[Handler] - Get all folders - started")
+
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -75,6 +82,7 @@ func (h *Handler) getAllFolders(c *gin.Context) {
 		Data: folders,
 	})
 
+	logrus.Debug("[Handler] - Get all folders - finished successfully")
 }
 
 // @Summary Get folder by id
@@ -91,6 +99,8 @@ func (h *Handler) getAllFolders(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/folders/{folder_id} [get]
 func (h *Handler) getFolderById(c *gin.Context) {
+	logrus.Debug("[Handler] - Get folder by id - started")
+
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -109,6 +119,8 @@ func (h *Handler) getFolderById(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, folder)
+
+	logrus.Debug("[Handler] - Get folder by id - finished successfully")
 }
 
 // @Summary Update folder
@@ -126,6 +138,8 @@ func (h *Handler) getFolderById(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/folders/{folder_id} [put]
 func (h *Handler) updateFolder(c *gin.Context) {
+	logrus.Debug("[Handler] - Update folder - started")
+
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -151,6 +165,8 @@ func (h *Handler) updateFolder(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{
 		Status: "ok",
 	})
+
+	logrus.Debug("[Handler] - Update folder - finished successfully")
 }
 
 // @Summary Delete folder
@@ -167,6 +183,8 @@ func (h *Handler) updateFolder(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/folders/{folder_id} [delete]
 func (h *Handler) deleteFolder(c *gin.Context) {
+	logrus.Debug("[Handler] - Delete folder - started")
+
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -187,4 +205,6 @@ func (h *Handler) deleteFolder(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{
 		Status: "ok",
 	})
+
+	logrus.Debug("[Handler] - Delete folder - finished successfully")
 }
