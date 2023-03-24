@@ -26,6 +26,17 @@ type AuthService struct {
 }
 
 func (s *AuthService) ParseToken(accessToken string) (int, error) {
+
+	isBlacklisted, err := s.repo.IsTokenInBlacklist(accessToken)
+	fmt.Println("accestoken", accessToken)
+	fmt.Println("isblacklisted", isBlacklisted)
+	if err != nil {
+		return 0, err
+	}
+	if isBlacklisted {
+		return 0, errors.New("token invalidated")
+	}
+
 	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
@@ -65,6 +76,14 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 	})
 
 	return token.SignedString([]byte(signingKey))
+}
+
+func (s *AuthService) InvalidateToken(accessToken string) (int, error) {
+	id, err := s.repo.AddTokenToBlacklist(accessToken)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
 }
 
 func (s *AuthService) generatePasswordHash(password string) string {

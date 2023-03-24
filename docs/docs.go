@@ -92,7 +92,7 @@ const docTemplate = `{
                 "tags": [
                     "files"
                 ],
-                "summary": "UpdateFolder file",
+                "summary": "Update file",
                 "operationId": "update-file",
                 "parameters": [
                     {
@@ -161,7 +161,7 @@ const docTemplate = `{
                 "tags": [
                     "files"
                 ],
-                "summary": "DeleteFolder file",
+                "summary": "Delete file",
                 "operationId": "delete-file",
                 "parameters": [
                     {
@@ -398,7 +398,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "UpdateFolder folder",
+                "summary": "Update folder",
                 "operationId": "update-folder",
                 "parameters": [
                     {
@@ -467,7 +467,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "DeleteFolder folder",
+                "summary": "Delete folder",
                 "operationId": "delete-folder",
                 "parameters": [
                     {
@@ -676,6 +676,55 @@ const docTemplate = `{
                         "description": "token",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/sign-out": {
+            "post": {
+                "description": "logout",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "SignOut",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "400": {

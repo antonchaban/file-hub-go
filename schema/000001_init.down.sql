@@ -7,3 +7,5 @@ DROP TABLE users;
 DROP TABLE folders;
 
 DROP TABLE files;
+
+DROP TABLE tokens_blacklist;
