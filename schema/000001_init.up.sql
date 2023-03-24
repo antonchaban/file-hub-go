@@ -38,3 +38,9 @@ CREATE TABLE folders_files
     FOREIGN KEY (folder_id) REFERENCES folders (id) ON DELETE CASCADE,
     FOREIGN KEY (file_id) REFERENCES files (id) ON DELETE CASCADE
 );
+
+CREATE TABLE tokens_blacklist
+(
+    id            serial primary key not null unique,
+    token      varchar(2048)       not null unique
+);

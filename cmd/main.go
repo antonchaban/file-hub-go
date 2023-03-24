@@ -6,6 +6,7 @@ import (
 	"github.com/antonchaban/file-hub-go/pkg/handler"
 	"github.com/antonchaban/file-hub-go/pkg/repository"
 	"github.com/antonchaban/file-hub-go/pkg/service"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -31,16 +32,16 @@ func main() {
 		logrus.Fatal("error occurred while reading config file: ", err.Error())
 	}
 
-	//if err := godotenv.Load(); err != nil {
-	//	logrus.Fatal("error occurred while loading env variables: ", err.Error())
-	//}
+	if err := godotenv.Load(); err != nil {
+		logrus.Fatal("error occurred while loading env variables: ", err.Error())
+	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     viper.GetString("dbHeroku.host"),
-		Port:     viper.GetString("dbHeroku.port"),
-		Username: viper.GetString("dbHeroku.username"),
-		DBName:   viper.GetString("dbHeroku.dbname"),
-		SSLMode:  viper.GetString("dbHeroku.sslmode"),
+		Host:     viper.GetString("db.host"),
+		Port:     viper.GetString("db.port"),
+		Username: viper.GetString("db.username"),
+		DBName:   viper.GetString("db.dbname"),
+		SSLMode:  viper.GetString("db.sslmode"),
 		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
