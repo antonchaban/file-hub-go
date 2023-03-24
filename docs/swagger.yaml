@@ -1,21 +1,5 @@
 basePath: /
 definitions:
-  fhub.File:
-    properties:
-      file_date:
-        type: string
-      file_id:
-        type: integer
-      file_name:
-        type: string
-      file_path:
-        type: string
-      file_size:
-        type: integer
-    required:
-      - file_name
-      - file_path
-    type: object
   fhub.Folder:
     properties:
       folder_date:
@@ -25,14 +9,7 @@ definitions:
       id:
         type: integer
     required:
-      - folder_name
-    type: object
-  fhub.UpdateFileInput:
-    properties:
-      file_name:
-        type: string
-      file_path:
-        type: string
+    - folder_name
     type: object
   fhub.UpdateFolderInput:
     properties:
@@ -47,8 +24,8 @@ definitions:
       username:
         type: string
     required:
-      - password
-      - username
+    - password
+    - username
     type: object
   handler.errorResponse:
     properties:
@@ -69,8 +46,8 @@ definitions:
       username:
         type: string
     required:
-      - password
-      - username
+    - password
+    - username
     type: object
   handler.statusResponse:
     properties:
@@ -79,143 +56,19 @@ definitions:
     type: object
 host: localhost:8080
 info:
-  contact: { }
+  contact: {}
   description: API Server for Files Managing Application
   title: File-Hub API
   version: "1.0"
 paths:
-  /api/files/{file_id}:
-    delete:
-      consumes:
-        - application/json
-      description: delete file
-      operationId: delete-file
-      parameters:
-        - description: file id
-          in: path
-          name: file_id
-          required: true
-          type: integer
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/handler.statusResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Delete file
-      tags:
-        - files
-    get:
-      consumes:
-        - application/json
-      description: get file by id
-      operationId: get-file-by-id
-      parameters:
-        - description: file id
-          in: path
-          name: file_id
-          required: true
-          type: integer
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/fhub.File'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Get file by id
-      tags:
-        - files
-    put:
-      consumes:
-        - application/json
-      description: update file
-      operationId: update-file
-      parameters:
-        - description: file id
-          in: path
-          name: file_id
-          required: true
-          type: integer
-        - description: file info
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/fhub.UpdateFileInput'
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/handler.statusResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Update file
-      tags:
-        - files
   /api/folders:
     get:
       consumes:
-        - application/json
+      - application/json
       description: get all folders
       operationId: get-all-folders
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -238,24 +91,24 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       security:
-        - ApiKeyAuth: [ ]
+      - ApiKeyAuth: []
       summary: Get all folders
       tags:
-        - folders
+      - folders
     post:
       consumes:
-        - application/json
+      - application/json
       description: create folder
       operationId: create-folder
       parameters:
-        - description: folder info
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/fhub.Folder'
+      - description: folder info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/fhub.Folder'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -278,24 +131,24 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       security:
-        - ApiKeyAuth: [ ]
+      - ApiKeyAuth: []
       summary: Create folder
       tags:
-        - folders
+      - folders
   /api/folders/{folder_id}:
     delete:
       consumes:
-        - application/json
+      - application/json
       description: delete folder
       operationId: delete-folder
       parameters:
-        - description: folder id
-          in: path
-          name: folder_id
-          required: true
-          type: integer
+      - description: folder id
+        in: path
+        name: folder_id
+        required: true
+        type: integer
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -318,23 +171,23 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       security:
-        - ApiKeyAuth: [ ]
+      - ApiKeyAuth: []
       summary: Delete folder
       tags:
-        - folders
+      - folders
     get:
       consumes:
-        - application/json
+      - application/json
       description: get folder by id
       operationId: get-folder-by-id
       parameters:
-        - description: folder id
-          in: path
-          name: folder_id
-          required: true
-          type: integer
+      - description: folder id
+        in: path
+        name: folder_id
+        required: true
+        type: integer
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -357,29 +210,29 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       security:
-        - ApiKeyAuth: [ ]
+      - ApiKeyAuth: []
       summary: Get folder by id
       tags:
-        - folders
+      - folders
     put:
       consumes:
-        - application/json
+      - application/json
       description: update folder
       operationId: update-folder
       parameters:
-        - description: folder id
-          in: path
-          name: folder_id
-          required: true
-          type: integer
-        - description: folder info
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/fhub.UpdateFolderInput'
+      - description: folder id
+        in: path
+        name: folder_id
+        required: true
+        type: integer
+      - description: folder info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/fhub.UpdateFolderInput'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -402,112 +255,25 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       security:
-        - ApiKeyAuth: [ ]
+      - ApiKeyAuth: []
       summary: Update folder
       tags:
-        - folders
-  /api/folders/{folder_id}/files:
-    get:
-      consumes:
-        - application/json
-      description: get all files
-      operationId: get-all-files
-      parameters:
-        - description: folder id
-          in: path
-          name: folder_id
-          required: true
-          type: integer
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/fhub.File'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Get all files
-      tags:
-        - files
-    post:
-      consumes:
-        - application/json
-      description: create file
-      operationId: create-file
-      parameters:
-        - description: folder id
-          in: path
-          name: folder_id
-          required: true
-          type: integer
-        - description: file info
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/fhub.File'
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: integer
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      security:
-        - ApiKeyAuth: [ ]
-      summary: Create file
-      tags:
-        - files
+      - folders
   /auth/sign-in:
     post:
       consumes:
-        - application/json
+      - application/json
       description: login
       operationId: login
       parameters:
-        - description: credentials
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/handler.signInInput'
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.signInInput'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: token
@@ -531,22 +297,22 @@ paths:
             $ref: '#/definitions/handler.errorResponse'
       summary: SignIn
       tags:
-        - auth
+      - auth
   /auth/sign-up:
     post:
       consumes:
-        - application/json
+      - application/json
       description: create account
       operationId: create-account
       parameters:
-        - description: account info
-          in: body
-          name: input
-          required: true
-          schema:
-            $ref: '#/definitions/fhub.User'
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/fhub.User'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
@@ -570,7 +336,7 @@ paths:
             $ref: '#/definitions/handler.errorResponse'
       summary: SignUp
       tags:
-        - auth
+      - auth
 securityDefinitions:
   ApiKeyAuth:
     in: header

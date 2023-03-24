@@ -15,197 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/files/{file_id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get file by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Get file by id",
-                "operationId": "get-file-by-id",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "file id",
-                        "name": "file_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/fhub.File"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "update file",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "UpdateFolder file",
-                "operationId": "update-file",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "file id",
-                        "name": "file_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "file info",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/fhub.UpdateFileInput"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "delete file",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "DeleteFolder file",
-                "operationId": "delete-file",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "file id",
-                        "name": "file_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/api/folders": {
             "get": {
                 "security": [
@@ -398,7 +207,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "UpdateFolder folder",
+                "summary": "Update folder",
                 "operationId": "update-folder",
                 "parameters": [
                     {
@@ -467,7 +276,7 @@ const docTemplate = `{
                 "tags": [
                     "folders"
                 ],
-                "summary": "DeleteFolder folder",
+                "summary": "Delete folder",
                 "operationId": "delete-folder",
                 "parameters": [
                     {
@@ -483,140 +292,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/handler.statusResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/folders/{folder_id}/files": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get all files",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Get all files",
-                "operationId": "get-all-files",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "folder id",
-                        "name": "folder_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/fhub.File"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "create file",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Create file",
-                "operationId": "create-file",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "folder id",
-                        "name": "folder_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "file info",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/fhub.File"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "integer"
                         }
                     },
                     "400": {
@@ -766,30 +441,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "fhub.File": {
-            "type": "object",
-            "required": [
-                "file_name",
-                "file_path"
-            ],
-            "properties": {
-                "file_date": {
-                    "type": "string"
-                },
-                "file_id": {
-                    "type": "integer"
-                },
-                "file_name": {
-                    "type": "string"
-                },
-                "file_path": {
-                    "type": "string"
-                },
-                "file_size": {
-                    "type": "integer"
-                }
-            }
-        },
         "fhub.Folder": {
             "type": "object",
             "required": [
@@ -804,17 +455,6 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
-                }
-            }
-        },
-        "fhub.UpdateFileInput": {
-            "type": "object",
-            "properties": {
-                "file_name": {
-                    "type": "string"
-                },
-                "file_path": {
-                    "type": "string"
                 }
             }
         },
