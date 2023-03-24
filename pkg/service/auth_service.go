@@ -28,6 +28,8 @@ type AuthService struct {
 func (s *AuthService) ParseToken(accessToken string) (int, error) {
 
 	isBlacklisted, err := s.repo.IsTokenInBlacklist(accessToken)
+	fmt.Println("accestoken", accessToken)
+	fmt.Println("isblacklisted", isBlacklisted)
 	if err != nil {
 		return 0, err
 	}

@@ -43,8 +43,9 @@ func (r *AuthPostgres) AddTokenToBlacklist(token string) (int, error) {
 
 func (r *AuthPostgres) IsTokenInBlacklist(token string) (bool, error) {
 	var counter int
-	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE token=$1", tokensBlacklist)
-	err := r.db.Get(&counter, query, token)
+	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE token like $1", tokensBlacklist)
+	err := r.db.Get(&counter, query, "%"+token+"%")
+	fmt.Println("counter", counter)
 
 	return counter != 0, err
 }

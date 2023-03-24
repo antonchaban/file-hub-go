@@ -42,5 +42,5 @@ CREATE TABLE folders_files
 CREATE TABLE tokens_blacklist
 (
     id            serial primary key not null unique,
-    token      varchar(2048)       not null unique,
+    token      varchar(2048)       not null unique
 );
