@@ -82,12 +82,11 @@ func (h *Handler) signIn(c *gin.Context) {
 
 // @Summary SignOut
 // @Tags auth
-// @Description sign out
-// @ID signOut
+// @Description logout
+// @ID logout
 // @Accept  json
 // @Produce  json
-// @Param input body signOutInput true "credentials"
-// @Success 200 {object} statusResponse
+// @Success 200 {object} map[string]interface{}
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
