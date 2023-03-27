@@ -15,7 +15,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param folder_id path int true "folder id"
-// @Param input body fhub.File true "file info"
+// @Param input body fhub.UpdateFileInput true "file info"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse

@@ -253,7 +253,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/fhub.Folder'
+          $ref: '#/definitions/fhub.UpdateFolderInput'
       produces:
       - application/json
       responses:
@@ -464,7 +464,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/fhub.File'
+          $ref: '#/definitions/fhub.UpdateFileInput'
       produces:
       - application/json
       responses:

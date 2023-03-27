@@ -283,7 +283,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/fhub.Folder"
+                            "$ref": "#/definitions/fhub.UpdateFolderInput"
                         }
                     }
                 ],
@@ -608,7 +608,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/fhub.File"
+                            "$ref": "#/definitions/fhub.UpdateFileInput"
                         }
                     }
                 ],

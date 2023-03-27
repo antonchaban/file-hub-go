@@ -14,7 +14,7 @@ import (
 // @ID create-folder
 // @Accept  json
 // @Produce  json
-// @Param input body fhub.Folder true "folder info"
+// @Param input body fhub.UpdateFolderInput true "folder info"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
