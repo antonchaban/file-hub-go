@@ -11,6 +11,14 @@ type FilePostgres struct {
 	db *sqlx.DB
 }
 
+type File interface {
+	CreateFile(folderId int, file fhub.File) (int, error)
+	GetAllFiles(userId, folderId int) ([]fhub.File, error)
+	GetFileById(userId, fileId int) (fhub.File, error)
+	DeleteFile(userId, fileId int) error
+	UpdateFile(userId, fileId int, input fhub.UpdateFileInput) error
+}
+
 func NewFilePostgres(db *sqlx.DB) *FilePostgres {
 	return &FilePostgres{db: db}
 }

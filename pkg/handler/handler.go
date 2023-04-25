@@ -12,12 +12,22 @@ import (
 )
 
 type Handler struct {
-	services *service.Service
+	//services *service.Service
+	service.Authorization
+	service.Folder
+	service.File
 }
 
-func NewHandler(services *service.Service) *Handler {
-	return &Handler{services: services}
+func NewHandler(authorization service.Authorization, folder service.Folder, file service.File) *Handler {
+	return &Handler{
+		Authorization: authorization,
+		Folder:        folder,
+		File:          file}
 }
+
+//func NewHandler(services *service.Service) *Handler {
+//	return &Handler{services: services}
+//}
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()

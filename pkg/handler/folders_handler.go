@@ -35,7 +35,7 @@ func (h *Handler) createFolder(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Folder.CreateFolder(userId, input)
+	id, err := h.Folder.CreateFolder(userId, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -72,7 +72,7 @@ func (h *Handler) getAllFolders(c *gin.Context) {
 		return
 	}
 
-	folders, err := h.services.Folder.GetAllFolders(userId)
+	folders, err := h.Folder.GetAllFolders(userId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -112,7 +112,7 @@ func (h *Handler) getFolderById(c *gin.Context) {
 		return
 	}
 
-	folder, err := h.services.Folder.GetById(userId, id)
+	folder, err := h.Folder.GetById(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -157,7 +157,7 @@ func (h *Handler) updateFolder(c *gin.Context) {
 		return
 	}
 
-	if err := h.services.UpdateFolder(userId, id, input); err != nil {
+	if err := h.UpdateFolder(userId, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -196,7 +196,7 @@ func (h *Handler) deleteFolder(c *gin.Context) {
 		return
 	}
 
-	err = h.services.Folder.DeleteFolder(userId, id)
+	err = h.Folder.DeleteFolder(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

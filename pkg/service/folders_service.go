@@ -9,6 +9,14 @@ type FolderService struct {
 	repo repository.Folder
 }
 
+type Folder interface {
+	CreateFolder(userId int, folder fhub.Folder) (int, error)
+	GetAllFolders(userId int) ([]fhub.Folder, error)
+	GetById(userId, folderId int) (fhub.Folder, error)
+	DeleteFolder(userId, folderId int) error
+	UpdateFolder(userId, folderId int, input fhub.UpdateFolderInput) error
+}
+
 func NewFolderService(repo repository.Folder) *FolderService {
 	return &FolderService{repo: repo}
 }

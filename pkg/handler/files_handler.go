@@ -42,7 +42,7 @@ func (h *Handler) createFile(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.File.CreateFile(userId, folderId, input)
+	id, err := h.File.CreateFile(userId, folderId, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -82,7 +82,7 @@ func (h *Handler) getAllFiles(c *gin.Context) {
 		return
 	}
 
-	files, err := h.services.File.GetAllFiles(userId, folderId)
+	files, err := h.File.GetAllFiles(userId, folderId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -120,7 +120,7 @@ func (h *Handler) getFileById(c *gin.Context) {
 		return
 	}
 
-	file, err := h.services.File.GetFileById(userId, fileId)
+	file, err := h.File.GetFileById(userId, fileId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -165,7 +165,7 @@ func (h *Handler) updateFile(c *gin.Context) {
 		return
 	}
 
-	if err := h.services.File.UpdateFile(userId, id, input); err != nil {
+	if err := h.File.UpdateFile(userId, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -204,7 +204,7 @@ func (h *Handler) deleteFile(c *gin.Context) {
 		return
 	}
 
-	err = h.services.File.DeleteFile(userId, fileId)
+	err = h.File.DeleteFile(userId, fileId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

@@ -10,6 +10,13 @@ type AuthPostgres struct {
 	db *sqlx.DB
 }
 
+type Authorization interface {
+	CreateUser(user fhub.User) (int, error)
+	GetUser(username, password string) (fhub.User, error)
+	AddTokenToBlacklist(token string) (int, error)
+	IsTokenInBlacklist(token string) (bool, error)
+}
+
 func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 	return &AuthPostgres{db: db}
 }

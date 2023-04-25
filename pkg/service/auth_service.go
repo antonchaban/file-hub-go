@@ -16,6 +16,13 @@ const (
 	tokenTTL   = time.Hour * 24
 )
 
+type Authorization interface {
+	CreateUser(user fhub.User) (int, error)
+	GenerateToken(username, password string) (string, error)
+	ParseToken(token string) (int, error)
+	InvalidateToken(accessToken string) (int, error)
+}
+
 type tokenClaims struct {
 	jwt.StandardClaims
 	UserId int `json:"user_id"`
@@ -55,7 +62,8 @@ func (s *AuthService) ParseToken(accessToken string) (int, error) {
 }
 
 func NewAuthService(repo repository.Authorization) *AuthService {
-	return &AuthService{repo: repo}
+	return &AuthService{
+		repo: repo}
 }
 
 func (s *AuthService) CreateUser(user fhub.User) (int, error) {

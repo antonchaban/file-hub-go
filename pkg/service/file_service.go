@@ -10,6 +10,14 @@ type FileService struct {
 	folderRepo repository.Folder
 }
 
+type File interface {
+	CreateFile(userId, folderId int, file fhub.File) (int, error)
+	GetAllFiles(userId, folderId int) ([]fhub.File, error)
+	GetFileById(userId, fileId int) (fhub.File, error)
+	DeleteFile(userId, fileId int) error
+	UpdateFile(userId, fileId int, input fhub.UpdateFileInput) error
+}
+
 func NewFileService(fileRepo repository.File, folderRepo repository.Folder) *FileService {
 	return &FileService{fileRepo: fileRepo, folderRepo: folderRepo}
 }
