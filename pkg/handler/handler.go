@@ -20,13 +20,6 @@ func NewHandler(authorization Authorization, folder Folder, file File) *Handler 
 	return &Handler{Authorization: authorization, Folder: folder, File: file}
 }
 
-//func NewHandler(authorization service.Authorization, folder service.Folder, file service.File) *Handler {
-//	return &Handler{
-//		Authorization: authorization,
-//		Folder:        folder,
-//		File:          file}
-//}
-
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
