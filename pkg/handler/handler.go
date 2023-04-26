@@ -3,7 +3,6 @@ package handler
 // gin-swagger middleware
 // swagger embed files
 import (
-	"github.com/antonchaban/file-hub-go/pkg/service"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -17,12 +16,16 @@ type Handler struct {
 	File
 }
 
-func NewHandler(authorization service.Authorization, folder service.Folder, file service.File) *Handler {
-	return &Handler{
-		Authorization: authorization,
-		Folder:        folder,
-		File:          file}
+func NewHandler(authorization Authorization, folder Folder, file File) *Handler {
+	return &Handler{Authorization: authorization, Folder: folder, File: file}
 }
+
+//func NewHandler(authorization service.Authorization, folder service.Folder, file service.File) *Handler {
+//	return &Handler{
+//		Authorization: authorization,
+//		Folder:        folder,
+//		File:          file}
+//}
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()

@@ -48,9 +48,6 @@ func main() {
 		logrus.Fatal("error occurred while connecting to db: ", err.Error())
 	}
 
-	//repos := repository.NewRepository(db)
-	//services := service.NewService(repos)
-	//handlers := handler.NewHandler(services)
 	handlers := handler.NewHandler(service.NewAuthService(repository.NewAuthPostgres(db)),
 		service.NewFolderService(repository.NewFolderPostgres(db)),
 		service.NewFileService(repository.NewFilePostgres(db), repository.NewFolderPostgres(db)))
