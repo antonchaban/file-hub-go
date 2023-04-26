@@ -12,10 +12,9 @@ import (
 )
 
 type Handler struct {
-	//services *service.Service
-	service.Authorization
-	service.Folder
-	service.File
+	Authorization
+	Folder
+	File
 }
 
 func NewHandler(authorization service.Authorization, folder service.Folder, file service.File) *Handler {
@@ -24,10 +23,6 @@ func NewHandler(authorization service.Authorization, folder service.Folder, file
 		Folder:        folder,
 		File:          file}
 }
-
-//func NewHandler(services *service.Service) *Handler {
-//	return &Handler{services: services}
-//}
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
@@ -38,7 +33,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
-		auth.POST("/sign-out", h.signOut)
 	}
 
 	api := router.Group("/api", h.userIdentity)

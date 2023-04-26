@@ -3,10 +3,17 @@ package handler
 import (
 	fhub "github.com/antonchaban/file-hub-go"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 )
+
+type File interface {
+	CreateFile(userId, folderId int, file fhub.File) (int, error)
+	GetAllFiles(userId, folderId int) ([]fhub.File, error)
+	GetFileById(userId, fileId int) (fhub.File, error)
+	DeleteFile(userId, fileId int) error
+	UpdateFile(userId, fileId int, input fhub.UpdateFileInput) error
+}
 
 // @Summary Create file
 // @Security ApiKeyAuth
@@ -16,15 +23,13 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param folder_id path int true "folder id"
-// @Param input body fhub.File true "file info"
+// @Param input body fhub.UpdateFileInput true "file info"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
 // @Router /api/folders/{folder_id}/files [post]
 func (h *Handler) createFile(c *gin.Context) {
-	logrus.Debug("[Handler] - Create file - started")
-
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -51,8 +56,6 @@ func (h *Handler) createFile(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})
-
-	logrus.Debug("[Handler] - Create file - finished successfully")
 }
 
 // @Summary Get all files
@@ -69,8 +72,6 @@ func (h *Handler) createFile(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/folders/{folder_id}/files [get]
 func (h *Handler) getAllFiles(c *gin.Context) {
-	logrus.Debug("[Handler] - Get all files - started")
-
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -89,8 +90,6 @@ func (h *Handler) getAllFiles(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, files)
-
-	logrus.Debug("[Handler] - Get all files - finished successfully")
 }
 
 // @Summary Get file by id
@@ -107,8 +106,6 @@ func (h *Handler) getAllFiles(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/files/{file_id} [get]
 func (h *Handler) getFileById(c *gin.Context) {
-	logrus.Debug("[Handler] - Get file by id - started")
-
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -127,8 +124,6 @@ func (h *Handler) getFileById(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, file)
-
-	logrus.Debug("[Handler] - Get file by id - finished successfully")
 }
 
 // @Summary Update file
@@ -146,8 +141,6 @@ func (h *Handler) getFileById(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/files/{file_id} [put]
 func (h *Handler) updateFile(c *gin.Context) {
-	logrus.Debug("[Handler] - Update file - started")
-
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -173,8 +166,6 @@ func (h *Handler) updateFile(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{
 		Status: "ok",
 	})
-
-	logrus.Debug("[Handler] - Update file - finished successfully")
 }
 
 // @Summary Delete file
@@ -191,8 +182,6 @@ func (h *Handler) updateFile(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/files/{file_id} [delete]
 func (h *Handler) deleteFile(c *gin.Context) {
-	logrus.Debug("[Handler] - Delete file - started")
-
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -213,6 +202,4 @@ func (h *Handler) deleteFile(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{
 		Status: "ok",
 	})
-
-	logrus.Debug("[Handler] - Delete file - finished successfully")
 }
