@@ -24,7 +24,7 @@ func (h *Handler) signUp(c *gin.Context) {
 
 	var input fhub.User
 	if err := c.BindJSON(&input); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 		return
 	}
 
@@ -78,31 +78,4 @@ func (h *Handler) signIn(c *gin.Context) {
 	})
 
 	logrus.Debug("[Handler] - Sign in - finished successfully")
-}
-
-// @Summary SignOut
-// @Tags auth
-// @Description logout
-// @ID logout
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} map[string]interface{}
-// @Failure 400,404 {object} errorResponse
-// @Failure 500 {object} errorResponse
-// @Failure default {object} errorResponse
-// @Router /auth/sign-out [post]
-func (h *Handler) signOut(c *gin.Context) {
-	logrus.Debug("[Handler] - Sign out - started")
-
-	token := c.GetHeader(authHeader)
-
-	_, err := h.services.Authorization.InvalidateToken(token)
-	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	c.JSON(http.StatusOK, map[string]interface{}{})
-
-	logrus.Debug("[Handler] - Sign out - finished successfully")
 }

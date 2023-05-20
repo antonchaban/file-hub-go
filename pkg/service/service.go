@@ -5,6 +5,8 @@ import (
 	"github.com/antonchaban/file-hub-go/pkg/repository"
 )
 
+//go:generate mockgen -source=service.go -destination=mocks/mock.go
+
 type Authorization interface {
 	CreateUser(user fhub.User) (int, error)
 	GenerateToken(username, password string) (string, error)
